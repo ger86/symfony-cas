@@ -1,0 +1,25 @@
+category_list:
+    path: /category
+    controller: App\Controller\CategoryController::list
+
+category_article:
+    path: /category/{id}
+    controller: App\Controller\CategoryController::category
+    requirements:
+        id: '\d+'
+
+category_create:
+    path: /category/create
+    controller: App\Controller\CategoryController::create
+
+category_update_article:
+    path: /category/{id}/update
+    controller: App\Controller\CategoryController::update
+    requirements:
+        id: '\d+'
+
+category_delete_article:
+    path: /category/{id}/delete
+    controller: App\Controller\CategoryController::delete
+    requirements:
+        id: '\d+'
