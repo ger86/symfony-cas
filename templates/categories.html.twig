@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{{ app.request.get('page', 1) }}
+{% for category in categories %}
+  {{ include('category_teaser.html.twig') }}
+{% endfor %}
+{% endblock body %}

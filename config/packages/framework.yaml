@@ -14,3 +14,7 @@ framework:
     #fragments: true
     php_errors:
         log: true
+    
+    validation:
+        auto_mapping:
+            App\Entity\: []

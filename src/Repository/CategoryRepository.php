@@ -19,10 +19,26 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
-    public function findByArticle(Article $article) {
+    public function findByArticle(Article $article)
+    {
         return $this->createQueryBuilder('c')
             ->where(':article MEMBER OF c.articles')
             ->setParameter('article', $article)->getQuery()->getResult();
+    }
+
+    public function findAllWithArticlesCount()
+    {
+        $queryBuilder = $this->createQueryBuilder('c')
+            ->select('c')
+            ->addSelect('COUNT(a) as total')
+            ->leftJoin('c.articles', 'a')
+            ->groupBy('c');
+        $result = $queryBuilder->getQuery()->getResult();
+        return array_map(function ($item) {
+            $category = $item[0];
+            $category->setTotalArticles($item['total']);
+            return $category;
+        }, $result);
     }
 
     // /**

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Form\Type\ArticleFormType;
 use App\Repository\CategoryRepository;
 use App\Service\ArticleManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -59,15 +60,17 @@ class BlogController extends AbstractController
         return $response;
     }
 
-    public function create(ArticleManager $articleManager, CategoryRepository $categoryRepository): Response
+    public function create(Request $request, ArticleManager $articleManager): Response
     {
-        $category = $categoryRepository->find(2);
         $article = new Article();
-        $article->setTitle('title' . random_int(0, PHP_INT_MAX));
-        $article->setBody('body');
-        $article->setCategory($category);
-        $articleManager->save($article);
-        $response = new Response('Hola mundo creador' . $article->getId());
-        return $response;
+        $form = $this->createForm(ArticleFormType::class, $article);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $articleManager->save($article);
+            return $this->redirectToRoute('blog_article', ['id' => $article->getId()]);
+        }
+        return $this->render( 'create_article.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }

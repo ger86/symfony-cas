@@ -28,6 +28,8 @@ class Category
      */
     private $articles;
 
+    private $totalArticles;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -77,6 +79,18 @@ class Category
                 $article->setCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTotalArticles(): int
+    {
+        return $this->totalArticles;
+    }
+
+    public function setTotalArticles(int $totalArticles): self
+    {
+        $this->totalArticles = $totalArticles;
 
         return $this;
     }

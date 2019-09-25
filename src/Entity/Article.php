@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
@@ -21,6 +22,10 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *   min = 5,
+     *   minMessage = "El título tiene que tener más de 5 caracteres"
+     * )
      */
     private $title;
 
@@ -43,6 +48,11 @@ class Article
      * @ORM\OneToMany(targetEntity="App\Entity\ArticleTag", mappedBy="article", orphanRemoval=true)
      */
     private $articleTags;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isPublished;
 
     public function __construct()
     {
@@ -130,6 +140,18 @@ class Article
                 $articleTag->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIsPublished(): ?bool
+    {
+        return $this->isPublished;
+    }
+
+    public function setIsPublished(?bool $isPublished): self
+    {
+        $this->isPublished = $isPublished;
 
         return $this;
     }

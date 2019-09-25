@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+  {{ form_start(form) }}
+    <div class="row">
+      <div class="col-6">
+        {{ form_row(form.title) }}
+        {{ form_row(form.body) }}
+      </div>
+      <div class="col-6">
+        {{ form_row(form.isPublished) }}
+        <div class="check-terms">
+          {{ form_label(form.checkTerms) }}
+          {{ form_errors(form.checkTerms) }}
+          {{ form_widget(form.checkTerms, { 'id': 'ola', 'attr': {'data-url': 'ola' }}) }}
+          {{ form_help(form.checkTerms) }}
+        </div>
+        {{ form_row(form.save) }}
+      </div>
+    </div>
+  {{ form_end(form) }}
+</div>
+{% endblock %}

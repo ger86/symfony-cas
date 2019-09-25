@@ -2,7 +2,7 @@ category_list:
     path: /category
     controller: App\Controller\CategoryController::list
 
-category_article:
+category_detail:
     path: /category/{id}
     controller: App\Controller\CategoryController::category
     requirements:

@@ -11,9 +11,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CategoryController extends AbstractController {
-    public function list(Request $request): Response {
-        $response = new Response('Hola mundo');
-        return $response;
+    public function list(CategoryRepository $categoryRepository): Response {
+        $categories = $categoryRepository->findAllWithArticlesCount();
+        return $this->render('categories.html.twig', ['categories' => $categories]);
     }
 
     public function category($id, CategoryRepository $categoryRepository, ArticleRepository $articleRepository): Response {

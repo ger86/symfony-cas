@@ -6,7 +6,10 @@
       {{ article.title }}
     </a>  
   </h2>
-  <div>{{ article.body|raw }}</div>
+  <div>{{ article.body|raw|withHeaderImage }}</div>
+  <div>
+    Número de caracteres: {{ getCharactersCount(article.body) }}
+  </div>
   <div>
     <strong>Categoría:</strong> {{ article.category is not empty ? article.category.name : '' }}
   </div>
