@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% for article in articles %}
+{{ include('article_teaser.html.twig') }}
+{% endfor %}
+{% endblock body %}

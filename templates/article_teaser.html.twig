@@ -1,0 +1,13 @@
+<article>
+  <h2>
+    <a
+      href="{{ path('blog_article', { 'id': article.id }) }}"
+    > 
+      {{ article.title }}
+    </a>  
+  </h2>
+  <div>{{ article.body|raw }}</div>
+  <div>
+    <strong>Categoría:</strong> {{ article.category is not empty ? article.category.name : '' }}
+  </div>
+</article>

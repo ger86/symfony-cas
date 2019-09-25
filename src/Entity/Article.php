@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Article
 {
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -31,9 +34,20 @@ class Article
      */
     private $body;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="articles")
+     */
+    private $category;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ArticleTag", mappedBy="article", orphanRemoval=true)
+     */
+    private $articleTags;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->articleTags = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -76,4 +90,48 @@ class Article
 
         return $this;
     }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ArticleTag[]
+     */
+    public function getArticleTags(): Collection
+    {
+        return $this->articleTags;
+    }
+
+    public function addArticleTag(ArticleTag $articleTag): self
+    {
+        if (!$this->articleTags->contains($articleTag)) {
+            $this->articleTags[] = $articleTag;
+            $articleTag->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticleTag(ArticleTag $articleTag): self
+    {
+        if ($this->articleTags->contains($articleTag)) {
+            $this->articleTags->removeElement($articleTag);
+            // set the owning side to null (unless already changed)
+            if ($articleTag->getArticle() === $this) {
+                $articleTag->setArticle(null);
+            }
+        }
+
+        return $this;
+    }
+  
 }

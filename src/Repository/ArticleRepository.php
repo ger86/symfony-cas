@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Article;
+use App\Entity\{Article, Category};
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -17,6 +17,22 @@ class ArticleRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Article::class);
+    }
+
+    public function countByCategory(Category $category) {
+        $queryBuilder = $this->createQueryBuilder('a')
+            ->select('COUNT(a) as total')
+            ->where('a.category = :category')
+            ->setParameter('category', $category);
+        return $queryBuilder->getQuery()->getSingleScalarResult();
+    }
+
+    public function findByCategoryName(string $name) {
+        $queryBuilder = $this->createQueryBuilder('a')
+            ->join('a.category', 'c')
+            ->where('c.name LIKE :name')
+            ->setParameter('name', "%$name%");
+        return $queryBuilder->getQuery()->getResult();
     }
 
     // /**

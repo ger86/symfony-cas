@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\TagRepository")
  */
-class Category
+class Tag
 {
     /**
      * @ORM\Id()
@@ -24,13 +24,13 @@ class Category
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="App\Entity\ArticleTag", mappedBy="tag", orphanRemoval=true)
      */
-    private $articles;
+    private $articleTags;
 
     public function __construct()
     {
-        $this->articles = new ArrayCollection();
+        $this->articleTags = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -51,30 +51,30 @@ class Category
     }
 
     /**
-     * @return Collection|Article[]
+     * @return Collection|ArticleTag[]
      */
-    public function getArticles(): Collection
+    public function getArticleTags(): Collection
     {
-        return $this->articles;
+        return $this->articleTags;
     }
 
-    public function addArticle(Article $article): self
+    public function addArticleTag(ArticleTag $articleTag): self
     {
-        if (!$this->articles->contains($article)) {
-            $this->articles[] = $article;
-            $article->setCategory($this);
+        if (!$this->articleTags->contains($articleTag)) {
+            $this->articleTags[] = $articleTag;
+            $articleTag->setTag($this);
         }
 
         return $this;
     }
 
-    public function removeArticle(Article $article): self
+    public function removeArticleTag(ArticleTag $articleTag): self
     {
-        if ($this->articles->contains($article)) {
-            $this->articles->removeElement($article);
+        if ($this->articleTags->contains($articleTag)) {
+            $this->articleTags->removeElement($articleTag);
             // set the owning side to null (unless already changed)
-            if ($article->getCategory() === $this) {
-                $article->setCategory(null);
+            if ($articleTag->getTag() === $this) {
+                $articleTag->setTag(null);
             }
         }
 

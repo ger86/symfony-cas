@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,12 +16,13 @@ class CategoryController extends AbstractController {
         return $response;
     }
 
-    public function category($id, CategoryRepository $categoryRepository): Response {
+    public function category($id, CategoryRepository $categoryRepository, ArticleRepository $articleRepository): Response {
         $category = $categoryRepository->find($id);
         if (empty($category)) {
             throw $this->createNotFoundException('Category not found');
         }
-        $response = new Response('Hola mundo con '.$category->getName());
+        $countOfArticles = $articleRepository->countByCategory($category);
+        $response = new Response('Hola mundo con '.$category->getName(). ': '.$countOfArticles);
         return $response;
     }
 

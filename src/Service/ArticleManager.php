@@ -17,6 +17,10 @@ class ArticleManager
         $this->em = $em;
     }
 
+    public function findAll(): array {
+        return $this->articleRepository->findAll();
+    }
+
     public function find(int $id): ?Article {
         $article = $this->articleRepository->find($id);
         return $article;
