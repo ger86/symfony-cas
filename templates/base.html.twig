@@ -3,16 +3,13 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link 
-          rel="stylesheet" 
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
-          crossorigin="anonymous"
-        >
+        {{ encore_entry_link_tags('base') }}
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+        <img src="{{ asset('build/images/foto.jpg') }}">
         {% block body %}{% endblock %}
+        {{ encore_entry_script_tags('base') }}
         {% block javascripts %}{% endblock %}
     </body>
 </html>

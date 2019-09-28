@@ -3,7 +3,7 @@ root = true
 [*]
 indent_style = space
 
-[*.{cs,js,less,css}]
+[*.{cs,js,less,css,sass}]
 indent_size = 2
 
 [*.json]

@@ -34,17 +34,21 @@ class BlogController extends AbstractController
     public function update(
         $id,
         ArticleManager $articleManager,
-        EntityManagerInterface $em
+        Request $request
     ): Response {
         $article = $articleManager->find($id);
         if (empty($article)) {
             throw $this->createNotFoundException('Article not found');
         }
-        $article->setTitle('hey world');
-        $em->flush();
-
-        $response = new Response('Hola mundo con ' . $article->getTitle());
-        return $response;
+        $form = $this->createForm(ArticleFormType::class, $article);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $articleManager->save($article);
+            return $this->redirectToRoute('blog_article', ['id' => $article->getId()]);
+        }
+        return $this->render('create_article.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     public function delete($id, ArticleManager $articleManager, EntityManagerInterface $em): Response

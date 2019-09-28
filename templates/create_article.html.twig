@@ -7,15 +7,19 @@
       <div class="col-6">
         {{ form_row(form.title) }}
         {{ form_row(form.body) }}
+        {{ form_row(form.category) }}
       </div>
       <div class="col-6">
+        {{ form_row(form.state) }}
         {{ form_row(form.isPublished) }}
+        {% if form.checkTerms is defined %}
         <div class="check-terms">
           {{ form_label(form.checkTerms) }}
           {{ form_errors(form.checkTerms) }}
           {{ form_widget(form.checkTerms, { 'id': 'ola', 'attr': {'data-url': 'ola' }}) }}
           {{ form_help(form.checkTerms) }}
         </div>
+        {% endif %}
         {{ form_row(form.save) }}
       </div>
     </div>

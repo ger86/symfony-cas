@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Validator\Constraints as AppAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -36,6 +37,7 @@ class Article
 
     /**
      * @ORM\Column(type="text")
+     * @AppAssert\ParentalConstraint
      */
     private $body;
 
@@ -53,6 +55,11 @@ class Article
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $isPublished;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $state;
 
     public function __construct()
     {
@@ -152,6 +159,18 @@ class Article
     public function setIsPublished(?bool $isPublished): self
     {
         $this->isPublished = $isPublished;
+
+        return $this;
+    }
+
+    public function getState(): ?int
+    {
+        return $this->state;
+    }
+
+    public function setState(?int $state): self
+    {
+        $this->state = $state;
 
         return $this;
     }
