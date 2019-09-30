@@ -27,3 +27,10 @@ services:
             $mailFrom: '%app.mail.from%'
         
     App\Service\MailerInterface: '@App\Service\Mailer'
+
+    _instanceof:
+        App\Service\Formatter\FormatterInterface:
+            tags: ['app.formatter']
+
+    App\Service\Formatter\FormatterManager:
+        arguments: [!tagged 'app.formatter']

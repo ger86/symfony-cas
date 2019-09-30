@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h1>Bienvenido a mi blog</h1>
+<h1>{{ 'Bienvenido a mi blog'|withFormattedText }}</h1>
 <div class="container">
   <div class="article-list">
     {% for article in articles %}

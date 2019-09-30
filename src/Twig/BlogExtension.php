@@ -2,11 +2,18 @@
 
 namespace App\Twig;
 
+use App\Service\Formatter\FormatterManager;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class BlogExtension extends AbstractExtension {
+    private $formatterManager;
+
+    public function __construct(FormatterManager $formatterManager)
+    {
+        $this->formatterManager = $formatterManager;
+    }
 
     public function getFunctions()
     {
@@ -18,8 +25,13 @@ class BlogExtension extends AbstractExtension {
     public function getFilters()
     {
         return [
-            new TwigFilter('withHeaderImage', [$this, 'withImage'], ['is_safe' => ['html']])
+            new TwigFilter('withHeaderImage', [$this, 'withImage'], ['is_safe' => ['html']]),
+            new TwigFilter('withFormattedText', [$this, 'withFormattedText'], ['is_safe' => ['html']])
         ];
+    }
+
+    public function withFormattedText(string $text): string {
+        return $this->formatterManager->formatText($text);
     }
 
     public function getCharactersCount(string $text): int {
