@@ -61,6 +61,11 @@ class Article
      */
     private $state;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $slug;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -171,6 +176,18 @@ class Article
     public function setState(?int $state): self
     {
         $this->state = $state;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
