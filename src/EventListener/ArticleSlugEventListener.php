@@ -4,8 +4,6 @@ namespace App\EventListener;
 
 use App\Entity\Article;
 use App\Service\Slugify;
-use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 class ArticleSlugEventListener
 {

@@ -13,4 +13,5 @@
   <div>
     <strong>Categoría:</strong> {{ article.category is not empty ? article.category.name : '' }}
   </div>
+  <div>{{ isGranted('ROLE_ADMIN') }}
 </article>
